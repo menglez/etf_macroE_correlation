@@ -1,1 +1,1 @@
-print('Hellow app')
+print('Hello app')
