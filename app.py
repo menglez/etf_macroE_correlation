@@ -7,13 +7,10 @@ import download_fred      #FRED function
 import download_etf
 import causalty_test
 import correlation_coint
+import ploting_all
 import etf_monthly_resample
 
-# Reporting visualization
-import matplotlib.pyplot as plt
 #import matplotlib.cm as cm
-
-
 #from datetime import datetime as dt
 #from urllib.request import urlopen
 
@@ -21,9 +18,11 @@ import matplotlib.pyplot as plt
 
 
 api_key = input('ENTER FRED API_KEY and press ENTER >> ')
+etf_input = input('ENTER ETF and press ENTER >> ')
 
-etf = 'SPY'
+etf = etf_input.upper()
 fred_indicator='M2'
+
 
 etf_df = download_etf.etf_download(etf)
 fred_df = download_fred.fred_download(api_key=api_key, fred_indicator=fred_indicator)
@@ -49,6 +48,10 @@ cb_diff_df = cb_diff_df.dropna()
 
 
 
-print('\n===================================\n')
+
 correlation_coint.correlation(cb_diff_df)
 causalty_test.causality(cb_diff_df)
+
+
+print('\n===================================\n')
+ploting_all.plot_all(combined_df, cb_diff_df, increase_etf=True)
