@@ -17,7 +17,13 @@ def etf_download(etf='SPY', start_date=start_date, end_date=end_date):
         full_dates = pd.date_range(start=df_data['Date'].min(), end=df_data['Date'].max(), freq='D')
         df_data = df_data.set_index('Date')
         data_full = df_data.reindex(full_dates)
-        data_full = data_full.interpolate(method='linear')
+
+        # Interpolate missing values (linear by default)
+        #data_full = data_full.interpolate(method='linear')
+
+        # Forward fill missing values (e.g., weekends and holidays)
+        data_full = data_full.ffill()
+
         data_full.index.name = 'Date'
 
         return data_full

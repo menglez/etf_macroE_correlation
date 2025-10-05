@@ -1,7 +1,7 @@
 
 from statsmodels.tsa.stattools import grangercausalitytests
 
-def causality(combined_df, max_lag = 5):
+def causality(combined_df, max_lag = 4):
 
     # Clean and prepare your data
     df = combined_df.dropna()
@@ -18,8 +18,20 @@ def causality(combined_df, max_lag = 5):
     causality_results = {}
 
     # Print formal summary of p-values
-    #print(f"\nGranger Causality Test: Does '{series2_name}' help predict '{series1_name}'?\n")
     print(f"\nGranger Causality Test: Does '{x}' help predict '{y}'?\n")
+    print('''NOTE
+    The Granger causality test assumes that the time series are stationary
+    If your data are non-stationary 
+    (which is almost always the case for economic, financial, or time-indexed variables), 
+    the test results can be spurious — i.e., you may find “causality” where none actually exists.
+    
+    Exception
+    If your two series are cointegrated 
+    (i.e., they move together in the long run but are individually non-stationary),
+    then you should not difference them
+     — instead, you should use a Vector Error Correction Model (VECM) 
+     rather than Granger causality in difference Series.
+    ''')
 
     for lag in range(1, max_lag + 1):
         ssr_f_p    = results[lag][0]['ssr_ftest'][1]
