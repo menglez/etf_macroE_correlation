@@ -1,5 +1,6 @@
 
-
+import pandas as pd
+import numpy as np
 from statsmodels.tsa.api import VECM
 
 #def vecm(df):
@@ -32,6 +33,8 @@ def vecm(df, k_ar_diff=2, coint_rank=1):
      rather than Granger causality in difference Series.
     """)
 
+
+
     print("\n=================== SUMMARY ===================")
     print(vecm_res.summary())
 
@@ -57,22 +60,10 @@ def vecm(df, k_ar_diff=2, coint_rank=1):
     else:
         print(f"→ Both series adjust at similar rates.")
 
-    # 3. Short-run dynamics (lagged differenced terms)
-    print("\nShort-run dynamics significance (p-values):")
-    sr_pvalues = vecm_res.pvalues
-    print(sr_pvalues)
-    sig_params = sr_pvalues[(sr_pvalues < 0.05)].index.tolist()
-    if sig_params:
-        print(f"\nSignificant short-run effects (p<0.05): {sig_params}")
-    else:
-        print("\nNo significant short-run lag effects at 5% level.")
 
-    # 4. Stability check
-    eigs = vecm_res.roots
-    stable = np.all(np.abs(eigs) < 1)
-    print("\nStability of system:")
-    print(f"  Eigenvalues: {np.round(eigs, 3)}")
-    print(f"  → Model is {'stable' if stable else 'unstable'} (all |λ|<1).")
+
+
+
 
     # 5. Return object for further IRF/FEVD/forecasting
     #return vecm_res
