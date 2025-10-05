@@ -51,7 +51,7 @@ causalty_test.causality(combined_df)
 vector_Error_Correction.vecm(combined_df)
 
 
-print('\n===================================\n')
+print('\n==================================\n')
 
 
 cb_diff_df   = combined_df.copy()
@@ -63,12 +63,12 @@ cb_diff_df = cb_diff_df.dropna()
 
 
 
+#
 
-#correlation_coint.correlation(cb_diff_df)      coint
+
 cb_diff_df = cb_diff_df.asfreq('MS')
-#cb_diff_df = cb_diff_df.asfreq('M')
 causalty_test.causality(cb_diff_df)
 
 
-print('\n===================================\n')
+
 ploting_all.plot_all(combined_df, cb_diff_df, increase_etf=True)
